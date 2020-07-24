@@ -12,7 +12,9 @@ app.set("view engine", "ejs");
 require('./startup/db')(app);
 
 // Application routes
-require('./startup/routes')(app);
+//require('./startup/routes')(app);
+const files = require('./routes/files');
+app.use('/',files);
 
 // Server
 const port = 5000;

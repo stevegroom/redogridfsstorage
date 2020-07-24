@@ -61,8 +61,17 @@ app.post('/upload',
 
     console.log('@route POST /upload body',req.body);
     console.log('First /upload middleware - upload single file:', "upload");
-    app.use('/upload',req.app.locals.upload.single('file'));
-    next();
+    //app.use('/upload',req.app.locals.upload.single('file'));
+    const upload = req.app.locals.upload;
+    console.log("Upload is:", upload);
+    upload(req, res, function (err) {
+      if (err) {
+        console.log("Error", err); // An error occurred when uploading 
+        return
+      }
+      // Everything went fine 
+      next();
+    })
   }, 
   (req, res, next) => {
 

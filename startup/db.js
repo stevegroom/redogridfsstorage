@@ -50,7 +50,8 @@ module.exports = function(app) {
   });
   app.locals.storage = storage;
     
-  const upload = multer({ storage:storage, limits: { fileSize: 10000000} });
+  const upload = multer({ storage:storage, limits: { fileSize: 10000000} }).single('file');
+  console.log("Upload ref in db.js", upload);
   app.locals.upload = upload;
   console.log("Upload");
 
