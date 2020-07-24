@@ -9,8 +9,7 @@ module.exports = function(app) {
   // DB
   const mongoURI = 'mongodb://dbuser:pass@0.0.0.0:27017/sro';
 
-  // connection
-  console.log("Connection");
+  // Connection
   const conn = mongoose.createConnection(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -18,7 +17,6 @@ module.exports = function(app) {
   app.locals.conn = conn;
   
   // init GFS
-  console.log("Gfs");
   let gfs;
   conn.once("open", () => {
     //console.log("init the gfs stream"); // init stream
@@ -29,7 +27,6 @@ module.exports = function(app) {
   });
 
   // Storage
-  console.log("Storage");
   const storage = new GridFsStorage({ 
     db: conn,
     file: (req, file) => {
@@ -51,8 +48,6 @@ module.exports = function(app) {
   app.locals.storage = storage;
     
   const upload = multer({ storage:storage, limits: { fileSize: 10000000} }).single('file');
-  console.log("Upload ref in db.js", upload);
   app.locals.upload = upload;
-  console.log("Upload");
 
 }
