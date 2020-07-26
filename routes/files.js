@@ -55,6 +55,8 @@ app.get('/', (req, res) => {
 
 // @route POST /upload
 // @desc Uploads file to DB
+
+
 app.post('/upload',
 
   (req,res,next) => {
@@ -62,7 +64,7 @@ app.post('/upload',
     console.log('@route POST /upload body',req.body);
     console.log('First /upload middleware - upload single file:', "upload");
 
-    const upload = req.app.locals.upload;
+    const upload = req.app.locals.upload.single('file');
 
     upload(req, res, function (err) {
       if (err) {
@@ -77,10 +79,38 @@ app.post('/upload',
 
     console.log('Second /upload middleware - the redirect');
     res.redirect('/');
-    next();
+    //next();
 
   }
 );
+
+// working...
+// app.post('/upload',
+
+//   (req,res,next) => {
+
+//     console.log('@route POST /upload body',req.body);
+//     console.log('First /upload middleware - upload single file:', "upload");
+
+//     const upload = req.app.locals.upload;
+
+//     upload(req, res, function (err) {
+//       if (err) {
+//         console.log("Error", err); // An error occurred when uploading 
+//         return
+//       }
+//       // Everything went fine 
+//       next();
+//     })
+//   }, 
+//   (req, res, next) => {
+
+//     console.log('Second /upload middleware - the redirect');
+//     res.redirect('/');
+//     //next();
+
+//   }
+// );
 
 // @route GET /files
 // @desc Display all files in JSON
